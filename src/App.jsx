@@ -1,8 +1,9 @@
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
+import Input from "./pages/users/Input";
 
+export const BaseUrl = "https://jsonplaceholder.typicode.com";
 const App = () => {
-  const BaseUrl = "https://jsonplaceholder.typicode.com";
   const UserUrl = `${BaseUrl}/users`;
 
   const [users, setUsers] = useState([]);
@@ -31,7 +32,7 @@ const App = () => {
 
   return (
     <>
-      This is app component
+    <Input/>
       {users.map((user) => (
         <Fragment key={user.id}>
           <div

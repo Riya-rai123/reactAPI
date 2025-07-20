@@ -1,59 +1,18 @@
+import { useRoutes } from "react-router-dom";
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
-import Input from "./pages/users/Input";
+import Posts from "./pages/posts";
+import Users from "./pages/users";
+import UserDetails from "./pages/users/UserDetails";
 
 export const BaseUrl = "https://jsonplaceholder.typicode.com";
 const App = () => {
-  const UserUrl = `${BaseUrl}/users`;
-
-  const [users, setUsers] = useState([]);
-  console.log(users);
-  // useEffect(()=>{},[])
-  const deleteUser = async (id) => {
-    try {
-      await axios.delete(`${UserUrl}/${id}`);
-      setUsers(users.filter((user)=>user.id !== id));
-    } catch (e) {
-      console.error("Error deleting user:", e);
-    }
-  };
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get(UserUrl);
-        setUsers(response.data);
-      } catch (e) {
-        console.error("Error fetching users:", e);
-      }
-    };
-    fetchUsers();
-  }, []);
-
-  return (
-    <>
-    <Input/>
-      {users.map((user) => (
-        <Fragment key={user.id}>
-          <div
-            style={{
-              backgroundColor: "lightblue",
-              margin: "10px",
-              padding: "10px",
-              borderRadius: "5px",
-            }}
-          >
-            {user.name}
-          </div>
-          <button
-            style={{ backgroundColor: "red" }}
-            onClick={() => deleteUser(user.id)}
-          >
-            Delete {user.name}
-          </button>
-        </Fragment>
-      ))}
-    </>
-  );
+  const myRoutes = [
+    { path: "/posts", element: <Posts /> },
+    { path: "/users", element: <Users /> },
+    {path: "/users/:id", element: <UserDetails/>},
+  ];
+  const element = useRoutes(myRoutes);
+  return <>{element}</>;
 };
 export default App;
